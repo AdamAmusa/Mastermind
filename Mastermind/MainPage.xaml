@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Mastermind.MainPage"
+             BackgroundImageSource="background.png"
+             BackgroundColor="White">
+
+    <StackLayout>
+        <StackLayout Orientation="Vertical" VerticalOptions="Center">
+            <Label Text="-Select the white circle" FontSize="Small" TextColor="Black"></Label>
+            <Label Text="-Select the color you wish to use" FontSize="Small" TextColor="Black"></Label>
+            <Label Text="-Repeat four times and click check" FontSize="Small" TextColor="Black"></Label>
+            <Label Text="-2x2 grid of small circles will be at the right" FontSize="Small" TextColor="Black"></Label>
+            <Label Text="-If a circle is red you chose the right color in the right space" FontSize="Small" TextColor="Black"></Label>
+            <Label Text="-If a circle is white you chose the right color in the wrong space" FontSize="Small" TextColor="Black"></Label>
+        </StackLayout>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300">
+            <Button x:Name="Checkpegs" IsVisible="false" Text="Check" BackgroundColor="White" TextColor="Black" FontSize="Medium" Clicked="CheckButton_Clicked"></Button> <!--Check button-->
+            <Button x:Name="Savegame"  IsVisible="false" Text="Save Game" BackgroundColor="White" TextColor="Black" FontSize="Medium" Clicked="SaveGame_Clicked"></Button> <!--Save Game button-->
+            <Button x:Name="Gamestart" Text="New Game" BackgroundColor="White" TextColor="Black" FontSize="Medium" Clicked="StartGame_Clicked"></Button> <!--New Game button-->
+            <Button x:Name="Loadgame" Text="Load Game" BackgroundColor="White" TextColor="Black" FontSize="Medium" Clicked="loadGame_Clicked"></Button> <!--Load save game button-->
+        </StackLayout>
+        <StackLayout IsVisible="False" x:Name="MainGame" HorizontalOptions="Center" VerticalOptions="Center">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" >
+                <Label x:Name="saveDebugger" Text="" TextColor="Black" FontSize="Medium"></Label>
+            </StackLayout>
+        <Grid x:Name="ColourGuess" Padding="3" BackgroundColor="Black" WidthRequest="300" HeightRequest="600"  HorizontalOptions="Center" VerticalOptions="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout x:Name="Hiddencolors" Spacing="20" Orientation="Horizontal" IsVisible="false" >
+                <BoxView x:Name="Hiddenpeg1"  Color="White" CornerRadius="50" WidthRequest="40" HeightRequest="40"
+                         Grid.Column="0" Grid.Row="0"></BoxView>
+                <BoxView x:Name="Hiddenpeg2" Color="White" CornerRadius="50" WidthRequest="40" HeightRequest="40"
+                         Grid.Column="1" Grid.Row="0"></BoxView>
+                <BoxView x:Name="Hiddenpeg3" Color="White" CornerRadius="50" WidthRequest="40" HeightRequest="40"
+                         Grid.Column="2" Grid.Row="0"></BoxView>
+                <BoxView x:Name="Hiddenpeg4" Color="White" CornerRadius="50" WidthRequest="40" HeightRequest="40"
+                         Grid.Column="3" Grid.Row="0"></BoxView>
+           </StackLayout>
+
+            <StackLayout x:Name="GuessRow" Orientation="Horizontal" Grid.Row="11" Spacing="20"> <!--Guess row stack layout-->
+            <Button x:Name="Guess1" BackgroundColor="White" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="11" Grid.Column="0" Clicked="Button_Clicked"></Button>
+            <Button x:Name="Guess2" BackgroundColor="White" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="11" Grid.Column="1" Clicked="Button_Clicked"></Button>
+            <Button x:Name="Guess3" BackgroundColor="White" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="11" Grid.Column="2" Clicked="Button_Clicked"></Button>
+            <Button x:Name="Guess4" BackgroundColor="White" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="11" Grid.Column="3" Clicked="Button_Clicked"></Button>
+            
+            
+            
+            <Grid Grid.Row="11" Grid.Column="4"> <!--Hint peg grid-->
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <BoxView x:Name="Hintpeg1" Color="Gray" CornerRadius="50" WidthRequest="20" HeightRequest="20"
+                         Grid.Column="0" Grid.Row="0">
+                </BoxView>
+                <BoxView x:Name="Hintpeg2" Color="Gray" CornerRadius="50" WidthRequest="20" HeightRequest="20"
+                         Grid.Column="1" Grid.Row="0">
+                </BoxView>
+                <BoxView x:Name="Hintpeg3" Color="Gray" CornerRadius="50" WidthRequest="20" HeightRequest="20"
+                         Grid.Column="0" Grid.Row="1">
+                </BoxView>
+                <BoxView x:Name="Hintpeg4" Color="Gray" CornerRadius="50" WidthRequest="20" HeightRequest="20"
+                         Grid.Column="1" Grid.Row="1">
+                </BoxView>
+            </Grid>
+            </StackLayout>
+
+
+        </Grid>
+
+            <Grid IsVisible="false" x:Name="ColorPicker" HorizontalOptions="Center" VerticalOptions="Center"> <!--Color picker stack layout--> 
+                
+                <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <BoxView Color="Red" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="0" Grid.Column="0">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <BoxView Color="Green" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="0" Grid.Column="1">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <BoxView Color="Purple" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="0" Grid.Column="2">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <BoxView Color="Yellow" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40"  Grid.Row="0" Grid.Column="3">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <BoxView Color="DarkOrange" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="1" Grid.Column="0">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <BoxView Color="Brown" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="1" Grid.Column="1">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <BoxView Color="Pink" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="1" Grid.Column="2">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+            <BoxView Color="Blue" CornerRadius="50" HeightRequest="40"
+                 WidthRequest="40" Grid.Row="1" Grid.Column="3">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="ColorGuesser_Tapped"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+
+        </Grid>
+    </StackLayout>
+    </StackLayout>
+
+
+
+</ContentPage>
+
